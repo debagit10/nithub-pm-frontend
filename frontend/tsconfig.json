@@ -26,5 +26,6 @@
     "outDir": "./dist",
     "removeComments": true
   },
-  "include": ["src", "src/auth"]
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }
