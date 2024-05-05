@@ -26,6 +26,5 @@
     "outDir": "./dist",
     "removeComments": true
   },
-  "include": ["src", "src/Env.tsx"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": ["src", "src/Env.tsx"]
 }

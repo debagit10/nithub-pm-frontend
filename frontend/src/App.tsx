@@ -1,4 +1,5 @@
 import React from "react";
+import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import Signup from "./pages/auth/Signup";
@@ -18,25 +19,23 @@ import Mail from "./pages/details/Mail";
 
 function App() {
   return (
-    <>
-      <Routes>
-        <Route path="/" Component={LandingPage} />
-        <Route path="/auth/signup" Component={Signup} />
-        <Route path="/auth/login" Component={Login} />
-        <Route path="/auth/password/reset" Component={ForgotPassword} />
-        <Route path="/home" Component={Home} />
-        <Route path="/dashboard" Component={Dashboard} />
-        <Route path="/inbox" Component={Inbox} />
-        <Route path="/projects" Component={Projects} />
-        <Route path="/tasks" Component={Tasks} />
-        <Route path="/teams" Component={Teams} />
-        <Route path="/setting" Component={Settings} />
-        <Route path="/project/:id" Component={Project} />
-        <Route path="/task/:id" Component={Task} />
-        <Route path="/team/:id" Component={Team} />
-        <Route path="/inbox/:id" Component={Mail} />
-      </Routes>
-    </>
+    <Routes>
+      <Route path="/" Component={LandingPage} />
+      <Route path="/auth/signup" Component={Signup} />
+      <Route path="/auth/login" Component={Login} />
+      <Route path="/auth/password/reset" Component={ForgotPassword} />
+      <Route path="/home" Component={Home} />
+      <Route path="/dashboard" Component={Dashboard} />
+      <Route path="/inbox" Component={Inbox} />
+      <Route path="/projects" Component={Projects} />
+      <Route path="/tasks" Component={Tasks} />
+      <Route path="/teams" Component={Teams} />
+      <Route path="/setting" Component={Settings} />
+      <Route path="/project/:id" Component={Project} />
+      <Route path="/task/:id" Component={Task} />
+      <Route path="/team/:id" Component={Team} />
+      <Route path="/inbox/:id" Component={Mail} />
+    </Routes>
   );
 }
 
