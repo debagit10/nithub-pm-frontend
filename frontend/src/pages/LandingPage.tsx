@@ -1,6 +1,5 @@
 import { Typography } from "@mui/material";
 import React from "react";
-//import { API_URL } from "../Env";
 
 const LandingPage = () => {
   return (
