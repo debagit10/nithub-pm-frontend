@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 import AuthContainer from "../../container/AuthContainer";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -20,6 +21,7 @@ import { API_URL } from "../../Env";
 import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
+  const [cookie, setCookies, removeCookie] = useCookies();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -60,7 +62,9 @@ const Login = () => {
         });
         return;
       }
+      const token = response.data.user.token;
       navigate("/home");
+      setCookies("token", token);
     } catch (error) {
       console.log(error);
     }

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 import AuthContainer from "../../container/AuthContainer";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -19,6 +20,7 @@ import { FcGoogle } from "react-icons/fc";
 import { API_URL } from "../../Env";
 
 const Signup = () => {
+  const [cookie, setCookies, removeCookie] = useCookies();
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -73,7 +75,9 @@ const Signup = () => {
         });
         return;
       }
+      const token = response.data.token;
       navigate("/home");
+      setCookies("token", token);
     } catch (error) {
       console.log(error);
     }
