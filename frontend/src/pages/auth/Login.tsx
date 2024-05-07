@@ -7,13 +7,65 @@ import {
   styled,
   Divider,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContainer from "../../container/AuthContainer";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
+import { LoadingButton } from "@mui/lab";
+
+import { API_URL } from "../../Env";
 
 import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const config = { headers: { "Content-type": "application/json" } };
+  const data = { email, password };
+
+  const submit = async () => {
+    if (!email || !password) {
+      toast.warning("Please fill all fields", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const response = await axios.get(`${API_URL}/api/user/login`, {
+        params: data,
+        headers: config.headers,
+      });
+      console.log(response.data);
+      if (response.data.error) {
+        setLoading(false);
+        toast.error(response.data.error, {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+        return;
+      }
+      navigate("/home");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const CustomButton = styled(Button)({
     backgroundColor: "#30D42B",
     borderColor: "#30D42B",
@@ -25,10 +77,9 @@ const Login = () => {
     },
   });
 
-  const navigate = useNavigate();
-
   return (
     <AuthContainer>
+      <ToastContainer />
       <div className="flex justify-center ">
         <Card
           elevation={3}
@@ -62,6 +113,7 @@ const Login = () => {
                   },
                 },
               }}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
               type="password"
@@ -81,12 +133,32 @@ const Login = () => {
                   },
                 },
               }}
+              onChange={(e) => setPassword(e.target.value)}
             />
 
             <div className="mt-5 mb-2.5">
-              <CustomButton type="submit" variant="contained" fullWidth>
-                Log in
-              </CustomButton>
+              {loading ? (
+                <div className="flex justify-center">
+                  <LoadingButton
+                    loading
+                    loadingIndicator="Logging in…"
+                    variant="outlined"
+                    fullWidth
+                    sx={{ textTransform: "capitalize" }}
+                  >
+                    Fetch data
+                  </LoadingButton>
+                </div>
+              ) : (
+                <CustomButton
+                  type="submit"
+                  variant="contained"
+                  fullWidth
+                  onClick={submit}
+                >
+                  Log in
+                </CustomButton>
+              )}
             </div>
 
             <div>

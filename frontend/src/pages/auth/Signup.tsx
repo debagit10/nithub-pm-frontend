@@ -25,6 +25,8 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const navigate = useNavigate();
+
   const config = { headers: { "Content-type": "application/json" } };
   const data = { name, email, password };
 
@@ -87,8 +89,6 @@ const Signup = () => {
       color: "white",
     },
   });
-
-  const navigate = useNavigate();
 
   return (
     <AuthContainer>
