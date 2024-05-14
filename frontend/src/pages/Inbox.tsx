@@ -1,3 +1,6 @@
+import React, { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 import {
   TableContainer,
   Paper,
@@ -8,28 +11,45 @@ import {
   TableBody,
   Typography,
 } from "@mui/material";
-import React from "react";
 import Side_nav_container from "../container/Side_nav_container";
 import axios from "axios";
+import { API_URL } from "../Env";
+import EmailOptions from "../modal/EmailOptions";
+
+interface Item {
+  _id: string;
+  status: boolean;
+  userID: string;
+  createdAt: string;
+  title: string;
+  message: string;
+}
 
 const Inbox = () => {
-  const createData = (
-    name: string,
-    calories: number,
-    fat: number,
-    carbs: number,
-    protein: number
-  ) => {
-    return { name, calories, fat, carbs, protein };
+  const [inbox, setInbox] = useState([]);
+  const [cookie, setCookies, removeCookie] = useCookies();
+  const token = cookie.token;
+  const config = { headers: { "Content-type": "application/json" } };
+  const navigate = useNavigate();
+
+  const userMail = async () => {
+    try {
+      const response = await axios.get(
+        `${API_URL}/api/user/mails?token=${token}`,
+        {
+          headers: config.headers,
+        }
+      );
+      setInbox(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const rows = [
-    createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-    createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-    createData("Eclair", 262, 16.0, 24, 6.0),
-    createData("Cupcake", 305, 3.7, 67, 4.3),
-    createData("Gingerbread", 356, 16.0, 49, 3.9),
-  ];
+  useEffect(() => {
+    userMail();
+  });
+
   return (
     <Side_nav_container>
       <div>
@@ -42,26 +62,27 @@ const Inbox = () => {
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Dessert (100g serving)</TableCell>
-                <TableCell align="right">Calories</TableCell>
-                <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                <TableCell align="right">Protein&nbsp;(g)</TableCell>
+                <TableCell>Title</TableCell>
+                <TableCell>Time</TableCell>
+                <TableCell>Options</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
+              {inbox.map((item: Item) => (
                 <TableRow
-                  key={row.name}
+                  key={item._id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  className="cursor-pointer"
                 >
-                  <TableCell component="th" scope="row">
-                    {row.name}
+                  <TableCell onClick={() => navigate(`/inbox/${item._id}`)}>
+                    {item.title}
                   </TableCell>
-                  <TableCell align="right">{row.calories}</TableCell>
-                  <TableCell align="right">{row.fat}</TableCell>
-                  <TableCell align="right">{row.carbs}</TableCell>
-                  <TableCell align="right">{row.protein}</TableCell>
+                  <TableCell onClick={() => navigate(`/inbox/${item._id}`)}>
+                    {item.createdAt}
+                  </TableCell>
+                  <TableCell>
+                    <EmailOptions mail={item} />
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
