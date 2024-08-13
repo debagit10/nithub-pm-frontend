@@ -70,7 +70,7 @@ const EmailOptions: React.FC<{ mail: Mail }> = (mail) => {
         config
       );
 
-      console.log(response.data);
+      console.log(response);
       toast.success(response.data.success, {
         position: "top-center",
         autoClose: 2000,
@@ -89,17 +89,25 @@ const EmailOptions: React.FC<{ mail: Mail }> = (mail) => {
       <ToastContainer />
       <div>
         <Button
-          id="demo-positioned-button"
-          aria-controls={open ? "demo-positioned-menu" : undefined}
+          id="option-button"
+          aria-controls={open ? "option-menu" : undefined}
           aria-haspopup="true"
           aria-expanded={open ? "true" : undefined}
           onClick={handleClick}
+          variant="outlined"
+          disableElevation
+          sx={{
+            color: "#22C55E",
+            borderColor: "#22C55E",
+            "&:hover": { borderColor: "#22C55E" },
+            textTransform: "capitalize",
+          }}
         >
-          Dashboard
+          Options
         </Button>
         <Menu
-          id="demo-positioned-menu"
-          aria-labelledby="demo-positioned-button"
+          id="option-menu"
+          aria-labelledby="option-button"
           anchorEl={anchorEl}
           open={open}
           onClose={handleClose}
@@ -122,9 +130,11 @@ const EmailOptions: React.FC<{ mail: Mail }> = (mail) => {
                   textTransform: "capitalize",
                 }}
                 fullWidth
-                onClick={updateMail}
+                onClick={() => {
+                  updateMail(), handleClose();
+                }}
               >
-                Mark as read
+                {curStatus ? "Mark as unread" : "Mark as read"}
               </Button>
             </div>
             <Divider />
@@ -152,7 +162,9 @@ const EmailOptions: React.FC<{ mail: Mail }> = (mail) => {
                   textTransform: "capitalize",
                 }}
                 fullWidth
-                onClick={deleteMail}
+                onClick={() => {
+                  deleteMail(), handleClose();
+                }}
               >
                 Delete
               </Button>
