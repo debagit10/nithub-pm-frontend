@@ -61,6 +61,7 @@ const Inbox = () => {
             Inbox
           </Typography>
         </div>
+
         {inbox ? (
           <>
             <TableContainer component={Paper}>
