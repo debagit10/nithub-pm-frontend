@@ -34,7 +34,6 @@ const Inbox = () => {
   const token = cookie.token;
   const config = { headers: { "Content-type": "application/json" } };
   const navigate = useNavigate();
-  const [date, setDate] = useState("");
 
   const userMail = async () => {
     try {
