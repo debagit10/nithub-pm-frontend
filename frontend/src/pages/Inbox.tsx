@@ -52,7 +52,7 @@ const Inbox = () => {
 
   useEffect(() => {
     userMail();
-  }, []);
+  });
 
   return (
     <Side_nav_container>

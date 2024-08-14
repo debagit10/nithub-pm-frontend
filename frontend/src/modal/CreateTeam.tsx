@@ -86,7 +86,7 @@ const CreateTeam = () => {
           textTransform: "capitalize",
         }}
       >
-        Create Team
+        New Team
       </Button>
 
       <Dialog

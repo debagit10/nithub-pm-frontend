@@ -16,6 +16,8 @@ import Project from "./pages/details/Project";
 import Task from "./pages/details/Task";
 import Team from "./pages/details/Team";
 import Mail from "./pages/details/Mail";
+import CreateProject from "./modal/CreateProject";
+import NewProject from "./pages/NewProject";
 
 function App() {
   return (
@@ -35,6 +37,7 @@ function App() {
       <Route path="/task/:id" Component={Task} />
       <Route path="/team/:id" Component={Team} />
       <Route path="/inbox/:id" Component={Mail} />
+      <Route path="/team/:id/new-project" Component={NewProject} />
     </Routes>
   );
 }
