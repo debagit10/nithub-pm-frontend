@@ -44,6 +44,7 @@ const Inbox = () => {
         }
       );
       setInbox(response.data);
+      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -51,7 +52,7 @@ const Inbox = () => {
 
   useEffect(() => {
     userMail();
-  });
+  }, []);
 
   return (
     <Side_nav_container>
@@ -62,50 +63,48 @@ const Inbox = () => {
           </Typography>
         </div>
 
-        {inbox ? (
-          <>
-            <TableContainer component={Paper}>
-              <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Title</TableCell>
-                    <TableCell>Time</TableCell>
-                    <TableCell />
+        <TableContainer component={Paper}>
+          {inbox.length ? (
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Title</TableCell>
+                  <TableCell>Time</TableCell>
+                  <TableCell />
+                </TableRow>
+              </TableHead>
+
+              <TableBody>
+                {inbox.map((item: Item) => (
+                  <TableRow
+                    key={item._id}
+                    sx={{
+                      "&:last-child td, &:last-child th": { border: 0 },
+                      backgroundColor: item.status ? "white" : "#E6F9E6",
+                    }}
+                    className="cursor-pointer"
+                  >
+                    <TableCell onClick={() => navigate(`/inbox/${item._id}`)}>
+                      <Typography variant="caption">{item.title}</Typography>
+                    </TableCell>
+                    <TableCell onClick={() => navigate(`/inbox/${item._id}`)}>
+                      <DayAndTime date={item.createdAt} />
+                    </TableCell>
+                    <TableCell>
+                      <EmailOptions mail={item} />
+                    </TableCell>
                   </TableRow>
-                </TableHead>
-                <TableBody>
-                  {inbox.map((item: Item) => (
-                    <TableRow
-                      key={item._id}
-                      sx={{
-                        "&:last-child td, &:last-child th": { border: 0 },
-                        backgroundColor: item.status ? "white" : "#E6F9E6",
-                      }}
-                      className="cursor-pointer"
-                    >
-                      <TableCell onClick={() => navigate(`/inbox/${item._id}`)}>
-                        <Typography variant="caption">{item.title}</Typography>
-                      </TableCell>
-                      <TableCell onClick={() => navigate(`/inbox/${item._id}`)}>
-                        <DayAndTime date={item.createdAt} />
-                      </TableCell>
-                      <TableCell>
-                        <EmailOptions mail={item} />
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </>
-        ) : (
-          <Stack>
-            <Skeleton variant="rectangular" width={500} height={50} />
-            <Skeleton variant="rectangular" width={500} height={50} />
-            <Skeleton variant="rectangular" width={500} height={50} />
-            <Skeleton variant="rectangular" width={500} height={50} />
-          </Stack>
-        )}
+                ))}
+              </TableBody>
+            </Table>
+          ) : (
+            <Stack spacing={0.5}>
+              <Skeleton variant="rectangular" width="100%" height={60} />
+              <Skeleton variant="rectangular" width="100%" height={60} />
+              <Skeleton variant="rectangular" width="100%" height={60} />
+            </Stack>
+          )}
+        </TableContainer>
       </div>
     </Side_nav_container>
   );

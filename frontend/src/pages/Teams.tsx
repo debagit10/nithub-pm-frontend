@@ -40,7 +40,6 @@ const Teams = () => {
         `${API_URL}/api/user/team?token=${token}`,
         { headers: config.headers }
       );
-      console.log(response.data);
       setTeams(response.data);
     } catch (error) {
       console.log(error);
@@ -81,6 +80,7 @@ const Teams = () => {
                     "&:last-child td, &:last-child th": { border: 0 },
                   }}
                   className="cursor-pointer"
+                  key={item.id}
                 >
                   <TableCell>
                     <Typography variant="caption">{item.name}</Typography>

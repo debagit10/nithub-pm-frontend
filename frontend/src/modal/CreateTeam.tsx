@@ -6,14 +6,64 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Stack,
   TextField,
   Typography,
 } from "@mui/material";
+import axios from "axios";
+import { API_URL } from "../Env";
+import { useCookies } from "react-cookie";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const CreateTeam = () => {
   const [open, setOpen] = useState(false);
   const [teamName, setTeamName] = useState("");
+  const [cookie, setCookies, removeCookie] = useCookies();
+
+  const token = cookie.token;
+
+  const submit = async () => {
+    if (!teamName) {
+      toast.warning("Please input team name", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    } else {
+      try {
+        const config = {
+          headers: { "Content-type": "application/json" },
+          params: { token },
+        };
+
+        const data = { teamName };
+
+        const response = await axios.post(
+          `${API_URL}/api/team/add`,
+          data,
+          config
+        );
+        console.log(response.data);
+        if (response.data.success == "team created successfully") {
+          toast.success(response.data.success, {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+          setOpen(false);
+          return;
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
 
   const handleOpen = () => {
     setOpen(true);
@@ -25,6 +75,7 @@ const CreateTeam = () => {
 
   return (
     <div>
+      <ToastContainer />
       <Button
         onClick={handleOpen}
         variant="outlined"
@@ -83,7 +134,7 @@ const CreateTeam = () => {
           </Button>
 
           <Button
-            onClick={handleClose}
+            onClick={submit}
             autoFocus
             disableElevation
             variant="contained"
