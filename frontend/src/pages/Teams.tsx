@@ -62,7 +62,11 @@ const Teams = () => {
         </Typography>
 
         <div className="flex justify-end">
-          <CreateTeam />
+          {teams.length ? (
+            <CreateTeam />
+          ) : (
+            <Skeleton variant="rectangular" width={70} height={30} />
+          )}
         </div>
       </div>
 

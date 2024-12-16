@@ -26,14 +26,15 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [role, setRole] = useState("");
 
   const navigate = useNavigate();
 
   const config = { headers: { "Content-type": "application/json" } };
-  const data = { name, email, password };
+  const data = { name, email, password, role };
 
   const submit = async () => {
-    if (!name || !email || !password || !confirmPassword) {
+    if (!name || !email || !password || !confirmPassword || !role) {
       toast.warning("Please fill all fields", {
         position: "top-center",
         autoClose: 2000,
@@ -104,11 +105,7 @@ const Signup = () => {
           sx={{ backgroundColor: "transparent" }}
         >
           <CardContent>
-            <Typography
-              variant="h5"
-              gutterBottom
-              className="flex justify-center"
-            >
+            <Typography variant="h6" className="flex justify-center">
               Sign Up
             </Typography>
 
@@ -131,6 +128,7 @@ const Signup = () => {
               }}
               onChange={(e) => setName(e.target.value)}
             />
+
             <TextField
               type="email"
               label="Email"
@@ -151,6 +149,28 @@ const Signup = () => {
               }}
               onChange={(e) => setEmail(e.target.value)}
             />
+
+            <TextField
+              placeholder="e.g Software developer"
+              label="Role"
+              variant="filled"
+              fullWidth
+              margin="normal"
+              size="small"
+              required
+              InputProps={{
+                disableUnderline: true,
+              }}
+              InputLabelProps={{
+                sx: {
+                  "&.Mui-focused": {
+                    color: "#30D42B",
+                  },
+                },
+              }}
+              onChange={(e) => setRole(e.target.value)}
+            />
+
             <TextField
               type="password"
               label="Password"

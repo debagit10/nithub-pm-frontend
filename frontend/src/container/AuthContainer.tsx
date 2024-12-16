@@ -14,7 +14,7 @@ const AuthContainer: React.FC<ContainerProps> = ({ children }) => {
         </div>
 
         <div className="flex justify-center text-green-500 mb-5">
-          <Typography variant="h2" className="text-center typing-animation">
+          <Typography variant="h4" className="text-center typing-animation">
             Project Management Platform
           </Typography>
         </div>

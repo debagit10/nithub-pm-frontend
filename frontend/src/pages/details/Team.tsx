@@ -53,32 +53,22 @@ const Team = () => {
             >
               {detail.name}
             </Typography>
-
-            <Stack direction="row" spacing={0.5}>
-              <Typography variant="body2">Team Lead: </Typography>
-              <Typography variant="subtitle2">{detail.admin_name}</Typography>
-            </Stack>
-
-            <Stack direction="row" spacing={0.5}>
-              <Typography variant="body2">Created on:</Typography>{" "}
-              <DayAndTime date={detail.createdAt} />
-            </Stack>
           </>
         ) : (
-          <Stack spacing={1}>
-            <Skeleton
-              variant="text"
-              sx={{ fontSize: "1rem" }}
-              width={150}
-              height={70}
-            />
-            <Skeleton variant="text" sx={{ fontSize: "1rem" }} width={300} />
-            <Skeleton variant="text" sx={{ fontSize: "1rem" }} width={150} />
-          </Stack>
+          <Skeleton
+            variant="text"
+            sx={{ fontSize: "1rem" }}
+            width={150}
+            height={70}
+          />
         )}
 
         <div className="flex justify-end">
-          <CreateProject />
+          {detail ? (
+            <CreateProject />
+          ) : (
+            <Skeleton variant="rectangular" width={70} height={30} />
+          )}
         </div>
 
         <div>

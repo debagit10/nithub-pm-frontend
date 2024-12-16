@@ -66,14 +66,6 @@ const Inbox = () => {
         <TableContainer component={Paper}>
           {inbox.length ? (
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell>Title</TableCell>
-                  <TableCell>Time</TableCell>
-                  <TableCell />
-                </TableRow>
-              </TableHead>
-
               <TableBody>
                 {inbox.map((item: Item) => (
                   <TableRow
